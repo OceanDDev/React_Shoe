@@ -83,28 +83,75 @@ const Header = () => {
             <div className="account-icon" onClick={toggleAccountMenu} style={{ cursor: 'pointer', position: 'relative' }}>
               <i className="fas fa-user-alt" style={{ color: "#272727", marginTop: "13px" }}></i>
               {showAccountMenu && (
-                <div className="account-menu" style={{ position: 'absolute', top: '40px', right: '0', backgroundColor: 'white', boxShadow: '0 2px 10px rgba(0,0,0,0.1)', zIndex: '1000', }}>
-                  <ul style={{ listStyle: 'none', padding: '10px', margin: '0' }}>
-                    {!isLogin ? (
-                      <>
-                        <li><Link to="/login">Đăng nhập</Link></li>
-                        <li><Link to="/register">Đăng ký</Link></li>
-                      </>
-                    ): (
-                      <li><Link onClick={onLogout}>Đăng xuất</Link></li>
+  <div
+    className="account-menu"
+    style={{
+      position: 'absolute',
+      top: '40px',
+      right: '0',
+      backgroundColor: 'white',
+      boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+      borderRadius: '8px',
+      zIndex: '1000',
+      padding: '10px 20px',
+      minWidth: '150px',
+    }}
+  >
+    <ul
+      style={{
+        listStyle: 'none',
+        padding: '0',
+        margin: '0',
+      }}
+    >
+      {!isLogin ? (
+        <>
+          <li style={{ marginBottom: '10px' }}>
+            <Link
+              to="/login"
+              style={{
+                textDecoration: 'none',
+                color: '#333',
+                padding: '8px 0',
+                display: 'block',
+              }}
+            >
+              Đăng nhập
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/register"
+              style={{
+                textDecoration: 'none',
+                color: '#333',
+                padding: '8px 0',
+                display: 'block',
+              }}
+            >
+              Đăng ký
+            </Link>
+          </li>
+        </>
+      ) : (
+        <li>
+          <Link
+            onClick={onLogout}
+            style={{
+              textDecoration: 'none',
+              color: '#333',
+              padding: '8px 0',
+              display: 'block',
+            }}
+          >
+            Đăng xuất
+          </Link>
+        </li>
+      )}
+    </ul>
+  </div>
+)}
 
-                    )}
-
-                    {/* {isADM && (
-                      <li><Link to="/admin">Trang quản trị</Link></li>
-                    )} */}
-
-                   
-                   
-
-                  </ul>
-                </div>
-              )}
             </div>
 
             <Link to="#" onClick={toggleSearchBar}>

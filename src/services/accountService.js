@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/users';
+const API_URL = 'https://server-shoe-inky.vercel.app/users';
 
 export const register = async (userData) => {
     try {

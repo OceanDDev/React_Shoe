@@ -58,12 +58,12 @@ const Home = () => {
             <Link  to={`/productDetail/${product._id}`}>
               <p href="#" title="Adidas EQT Cushion ADV" className="img-resize">
                 <img
-          src={`http://localhost:3000/images/${product.image}`}
+          src={`https://server-shoe-inky.vercel.app/images/${product.image}`}
           alt="Adidas EQT Cushion ADV"
                   className="lazyloaded"
                 />
                 <img
-          src={`http://localhost:3000/images/${product.image}`}
+          src={`https://server-shoe-inky.vercel.app/images/${product.image}`}
           alt="Adidas EQT Cushion ADV"
                   className="lazyloaded"
                 />
@@ -159,21 +159,7 @@ const Home = () => {
     <section>
       <div className="content">
         <div className="container">
-          <div className="hot_sp">
-            <h2 style={{ textAlign: "center" }}>
-              <a
-                style={{ fontSize: 28, color: "black", textDecoration: "none" }}
-                href=""
-              >
-                Sản phẩm mới
-              </a>
-            </h2>
-            <div className="view-all" style={{ textAlign: "center" }}>
-              <a style={{ color: "black", textDecoration: "none" }} href="">
-                Xem thêm
-              </a>
-            </div>
-          </div>
+          
         </div>
         {/*Product*/}
       </div>

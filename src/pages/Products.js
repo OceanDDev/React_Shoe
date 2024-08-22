@@ -295,12 +295,12 @@ const Products = () => {
       <div className="product-img fade-box">
         <Link to={`/productDetail/${product._id}`} title="Adidas EQT Cushion ADV" className="img-resize">
           <img
-          src={`http://localhost:3000/images/${product.image}`}
+          src={`https://server-shoe-inky.vercel.app/images/${product.image}`}
             alt="Adidas EQT Cushion ADV"
             className="lazyloaded"
           />
           <img
-          src={`http://localhost:3000/images/${product.image}`}
+          src={`https://server-shoe-inky.vercel.app/images/${product.image}`}
             alt="Adidas EQT Cushion ADV"
             className="lazyloaded"
           />
