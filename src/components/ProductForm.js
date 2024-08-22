@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from 'react';
 import { getCategory } from '../services/categoryService';
 
@@ -19,30 +18,21 @@ const ProductForm = ({ product, onSave, handleReset, onCancel }) => {
     }, []);
 
     const handleChange = (e) => {
-        
-        
         const { name, value, files, checked, type } = e.target;
         
         if (type === 'file') {
-            setFormData((formData) => ({ ...formData, [name]: files[0] }));
+            setFormData(prevData => ({ ...prevData, [name]: files[0] }));
         } else if (type === 'checkbox') {
-            setFormData((formData) => ({ ...formData, [name]: checked ? 1 : 0 }));
+            setFormData(prevData => ({ ...prevData, [name]: checked ? 1 : 0 }));
         } else {
-            setFormData((formData) => ({ ...formData, [name]: value }));
+            setFormData(prevData => ({ ...prevData, [name]: value }));
         }
-        // let imgTerm = ''
-        // if(formData.image.length> 0 && formData.image[0]){
-        //     imgTerm = formData.image[0]
-        // }else{
-        //     imgTerm  = formData.imgOld
-        // }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         onSave(formData);
         console.log(formData);
-        
     };
 
     return (
@@ -105,9 +95,11 @@ const ProductForm = ({ product, onSave, handleReset, onCancel }) => {
                     onChange={handleChange}
                 />
             </div>
-            <div className="form-group">
-            <img width={200} name='imgOld' src={`http://localhost:3000/images/${formData?.image}`}/>
-            </div>
+            {formData.image && (
+                <div className="form-group">
+                    <img width={200} src={`http://localhost:3000/images/${formData.image}`} alt="Product" />
+                </div>
+            )}
             <div className="form-group">
                 <label htmlFor="hot">Hot</label>
                 <input
@@ -119,10 +111,17 @@ const ProductForm = ({ product, onSave, handleReset, onCancel }) => {
                 />
             </div>
             <div className="form-actions">
-            
                 <button type="submit">Save Product</button>
-                
-               
+                {handleReset && (
+                    <button type="button" onClick={handleReset}>
+                        Reset
+                    </button>
+                )}
+                {onCancel && (
+                    <button type="button" onClick={onCancel}>
+                        Cancel
+                    </button>
+                )}
             </div>
         </form>
     );

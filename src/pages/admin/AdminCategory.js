@@ -82,10 +82,10 @@ const AdminCategory = () => {
                             </Link>
                         </li>
                         <li>
-                            <a href="#">
+                            <Link to="/admin/user">
                                 <i className="bx bxs-doughnut-chart" />
                                 <span className="text">Người dùng</span>
-                            </a>
+                            </Link>
                         </li>
                         <li>
                             <a href="#">

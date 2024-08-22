@@ -1,109 +1,81 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from 'react';
-import './admin.css';
-import ProductTable from '../../components/ProductTable';
-import { deleteProduct, getProducts, saveProduct, updateProduct } from '../../services/productService';
-import ProductForm from '../../components/ProductForm';
+import { addUser, deleteUser, getUser, updateUser } from '../../services/accountService'; 
+import UserTable from '../../components/UserTable';
+import UserForm from '../../components/UserForm';
 import { Link } from 'react-router-dom';
 
-const AdminProducts = () => {
-    const [products, setProducts] = useState([]);
-    const [editingProduct, setEditingProduct] = useState(null);
+const AdminUser = () => {
+    const [users, setUsers] = useState([]);
+    const [editingUser, setEditingUser] = useState(null);
 
     useEffect(() => {
-        const fetchProducts = async () => {
+        const fetchUsers = async () => {
             try {
-                const fetchedProducts = await getProducts();
-                if (Array.isArray(fetchedProducts)) {
-                    setProducts(fetchedProducts);
-                } else {
-                    console.error('Expected an array but got:', fetchedProducts);
-                    setProducts([]);
-                }
+                const fetchedUsers = await getUser();
+                setUsers(fetchedUsers);
             } catch (error) {
-                console.log("Error fetching products");
-                setProducts([]);
+                console.error('Error fetching users', error);
             }
         };
-        fetchProducts();
+        fetchUsers();
     }, []);
 
-    const handleAddNew = () => {
-        setEditingProduct({ _id: null, name: "", category: "", price: "", image: "", description: "", hot: "", imgOld: "" });
+    const handleDelete = async (id) => {
+        try {
+            await deleteUser(id);
+            setUsers(users.filter((user) => user._id !== id));
+        } catch (error) {
+            console.error('Error deleting user', error);
+        }
     };
 
-    const handleSave = async (product) => {
-        try {
-            const data = new FormData();
-            Object.keys(product).forEach(key => {
-                data.append(key, product[key]);
-            });
+    const handleEdit = (user) => {
+        setEditingUser(user);
+    };
 
-            if (product._id) {
-                await updateProduct(product._id, data);
-                setProducts(products.map((p) => (p._id === product._id ? product : p)));
+    const handleSave = async (user) => {
+        try {
+            if (user._id) {
+                await updateUser(user._id, user);
+                setUsers(users.map((u) => (u._id === user._id ? user : u)));
             } else {
-                const newProduct = await saveProduct(data);
-                setProducts([...products, newProduct]);
+                const newUser = await addUser(user);
+                setUsers([...users, newUser]);
             }
-
-            setEditingProduct(null);
         } catch (error) {
-            console.error("Error adding or updating product", error);
+            console.error('Error saving user', error);
         }
+        setEditingUser(null);
     };
 
-    const handleEdit = (product) => {
-        setEditingProduct(product);
+    const handleAddNew = () => {
+        setEditingUser({ _id: null, fullname: "", email: "", birthday: "", password: "", isAdmin: false });
     };
 
-    const handleDelete = async (id) =>  { 
-        try {
-            await deleteProduct(id);
-            setProducts(products.filter(p => p._id !== id));
-        } catch (error) {
-            console.error("Error deleting product", error);
-        }
+    const handleCancel = () => {
+        setEditingUser(null);
     };
 
     return (
         <div>
             <section id="sidebar">
-                <a href="#" className="brand">
+                <Link to="/admin" className="brand">
                     <i className="bx bxs-smile" />
-                    <span className="text">Ocean Admin</span>
-                </a>
+                    <span className="text">User Admin</span>
+                </Link>
                 <ul className="side-menu top">
-                    <li className="active">
+                    <li>
                         <Link to="/admin">
                             <i className="bx bxs-dashboard" />
-                            <span className="text">Sản Phẩm</span>
+                            <span className="text">Dashboard</span>
                         </Link>
                     </li>
-                    <li>
-                        <Link to='/admin/category'>
-                            <i className="bx bxs-shopping-bag-alt" />
-                            <span className="text">Danh Mục</span>
+                    <li className="active">
+                        <Link to="/admin/users">
+                            <i className="bx bxs-user" />
+                            <span className="text">Người Dùng</span>
                         </Link>
-                    </li>
-                    <li>
-                        <Link to="/admin/user">
-                            <i className="bx bxs-doughnut-chart" />
-                            <span className="text">Người dùng</span>
-                        </Link>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i className="bx bxs-message-dots" />
-                            <span className="text">Message</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i className="bx bxs-group" />
-                            <span className="text">Team</span>
-                        </a>
                     </li>
                 </ul>
                 <ul className="side-menu">
@@ -124,9 +96,7 @@ const AdminProducts = () => {
             <section id="content">
                 <nav>
                     <i className="bx bx-menu" />
-                    <a href="#" className="nav-link">
-                        Categories
-                    </a>
+                    <span className="nav-link">Users</span>
                     <form action="#">
                         <div className="form-input">
                             <input type="search" placeholder="Search..." />
@@ -142,13 +112,13 @@ const AdminProducts = () => {
                         <span className="num">8</span>
                     </a>
                     <a href="#" className="profile">
-                        <img src="../images/dog.jpg" />
+                        <img src="../images/profile.jpg" alt="Profile" />
                     </a>
                 </nav>
                 <main>
                     <div className="head-title">
                         <div className="left">
-                            <h1>Dashboard</h1>
+                            <h1>User Management</h1>
                             <ul className="breadcrumb">
                                 <li>
                                     <a href="#">Dashboard</a>
@@ -158,13 +128,13 @@ const AdminProducts = () => {
                                 </li>
                                 <li>
                                     <a className="active" href="#">
-                                        Home
+                                        User Management
                                     </a>
                                 </li>
                             </ul>
                         </div>
                         <button className="btn-download" onClick={handleAddNew}>
-                            <span className="text">Thêm Sản Phẩm</span>
+                            <span className="text">Thêm Người Dùng</span>
                         </button>
                     </div>
                     <ul className="box-info">
@@ -172,7 +142,7 @@ const AdminProducts = () => {
                             <i className="bx bxs-calendar-check" />
                             <span className="text">
                                 <h3>1020</h3>
-                                <p>New Order</p>
+                                <p>New Orders</p>
                             </span>
                         </li>
                         <li>
@@ -193,19 +163,19 @@ const AdminProducts = () => {
                     <div className="table-data">
                         <div className="order">
                             <div className="head">
-                                <h3>Recent Orders</h3>
+                                <h3>Danh Sách Người Dùng</h3>
                                 <i className="bx bx-search" />
                                 <i className="bx bx-filter" />
                             </div>
-                            {editingProduct && (
-                                <ProductForm
-                                    product={editingProduct}
+                            {editingUser && (
+                                <UserForm
+                                    initialValues={editingUser}
                                     onSave={handleSave}
-                                    onCancel={() => setEditingProduct(null)}
+                                    onCancel={handleCancel}
                                 />
                             )}
-                            <ProductTable
-                                products={products}
+                            <UserTable
+                                users={users}
                                 onEdit={handleEdit}
                                 onDelete={handleDelete}
                             />
@@ -215,6 +185,6 @@ const AdminProducts = () => {
             </section>
         </div>
     );
-};
+}
 
-export default AdminProducts;
+export default AdminUser;

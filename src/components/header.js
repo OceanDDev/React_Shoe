@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import {  checkLogin } from '../services/accountService';
+import { checkLogin } from '../services/accountService';
 import './header.css';  
 import { useShoppingContext } from '../context/ShoppingContext';
 
 const Header = () => {
   const navigate = useNavigate();
-  const {cartQty} = useShoppingContext();
+  const { cartQty } = useShoppingContext();
 
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [input, setInput] = useState("");
   const [showAccountMenu, setShowAccountMenu] = useState(false);
-  const [isLogin, setIsLogin] = useState("");
-  // const [isADM, setIsADM] = useState("");
+  const [user, setUser] = useState(null); // Sử dụng user để chứa thông tin người dùng
 
   useEffect(() => {
-    const checkIsLogin = checkLogin();  
-    // const checkIsAdmin = checkAdmin();
-    setIsLogin(checkIsLogin);
-    // setIsADM(checkIsAdmin);
+    const fetchUser = async () => {
+      const loggedInUser = await checkLogin(); // Đảm bảo checkLogin trả về đối tượng người dùng
+      setUser(loggedInUser);
+    };
+
+    fetchUser();
   }, []);
 
   const search = () => {
@@ -42,7 +43,7 @@ const Header = () => {
 
   const onLogout = () => {
     localStorage.clear();
-    window.location.href='/'
+    window.location.href = '/';
   };
 
   return (
@@ -66,7 +67,6 @@ const Header = () => {
               <li className="nav-item">
                 <Link className="nav-link" to="/products">BỘ SƯU TẬP</Link>
               </li>
-              
               <li className="nav-item">
                 <Link className="nav-link" to="/about">GIỚI THIỆU</Link>
               </li>
@@ -104,7 +104,7 @@ const Header = () => {
         margin: '0',
       }}
     >
-      {!isLogin ? (
+      {!user ? (
         <>
           <li style={{ marginBottom: '10px' }}>
             <Link
@@ -134,19 +134,37 @@ const Header = () => {
           </li>
         </>
       ) : (
-        <li>
-          <Link
-            onClick={onLogout}
-            style={{
-              textDecoration: 'none',
-              color: '#333',
-              padding: '8px 0',
-              display: 'block',
-            }}
-          >
-            Đăng xuất
-          </Link>
-        </li>
+        <>
+          <li>
+            <Link
+              onClick={onLogout}
+              style={{
+                textDecoration: 'none',
+                color: '#333',
+                padding: '8px 0',
+                display: 'block',
+              }}
+            >
+              Đăng xuất 
+            </Link>
+            
+          </li>
+          {user.isAdmin && (
+            <li>
+              <Link
+                to="/admin"
+                style={{
+                  textDecoration: 'none',
+                  color: '#333',
+                  padding: '8px 0',
+                  display: 'block',
+                }}
+              >
+                Trang quản trị
+              </Link>
+            </li>
+          )}
+        </>
       )}
     </ul>
   </div>
@@ -158,21 +176,21 @@ const Header = () => {
               <i className="fas fa-search" style={{ color: "black", marginTop: "13px" }}></i>
             </Link>
 
-
             {showSearchBar && (
               <div className="search-bar active">
                 <input value={input} onChange={handleInputChange} type="text" placeholder="Nhập từ khóa..." />
                 <button type="button" onClick={search}>Tìm kiếm</button>
               </div>
             )}
-            <Link className="cart-icon" to="/cart">
-      <i className="fas fa-shopping-cart"></i>
-      <span className="cart-badge">{cartQty}</span>
-    </Link>
 
-            {isLogin && (
+            <Link className="cart-icon" to="/cart">
+              <i className="fas fa-shopping-cart"></i>
+              <span className="cart-badge">{cartQty}</span>
+            </Link>
+
+            {user && (
               <Link style={{ color: "#272727", marginTop: "12px" }} to="#">
-                <i>Xin chào {isLogin.fullname}</i>
+                <i>Xin chào {user.fullname}</i>
               </Link>
             )}
           </div>

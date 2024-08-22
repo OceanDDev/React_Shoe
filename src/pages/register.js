@@ -15,6 +15,7 @@ const Register = () => {
     email: '',
     password: '',
     confirmpassword: '',
+    isAdmin: ''
   });
 
   const [error, setError] = useState('');
