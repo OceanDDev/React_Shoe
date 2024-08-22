@@ -5,7 +5,7 @@ import "./App.css";
 import Footer from "./components/footer";
 import Products from "./pages/Products";
 import Login from "./pages/login";
-import Register from "./pages/Register";
+import Register from "./pages/register";
 import Cart from "./pages/Cart";
 import { Toaster } from 'react-hot-toast';
 import AdminProducts from "./pages/admin/AdminProducts";
@@ -16,7 +16,7 @@ import Checkout from "./pages/Checkout";
 import PrivateRoute from "./components/PrivateRoute";
 import Home from "./pages/home";
 import Header from "./components/header";
-import ProductDetail from "./pages/ProductDetail";
+import ProductDetail from "./pages/productDetail";
 
 function App() {
   const location = useLocation();
