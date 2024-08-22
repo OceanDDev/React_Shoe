@@ -2,7 +2,7 @@
 import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
-import Footer from "./components/Footer";
+import Footer from "./components/footer";
 import Products from "./pages/Products";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -14,9 +14,9 @@ import About from "./pages/About";
 import Blog from "./pages/Blog";
 import Checkout from "./pages/Checkout";
 import PrivateRoute from "./components/PrivateRoute";
+import Home from "./pages/home";
+import Header from "./components/header";
 import ProductDetail from "./pages/ProductDetail";
-import Home from "./pages/Home";
-import Header from "./components/Header";
 
 function App() {
   const location = useLocation();
