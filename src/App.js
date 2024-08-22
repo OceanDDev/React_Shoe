@@ -16,7 +16,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import Home from "./pages/home";
 import Header from "./components/header";
 import ProductDetail from "./pages/productDetail";
-import Register from "./pages/register";
+import Register from "./pages/Register";
 
 function App() {
   const location = useLocation();
