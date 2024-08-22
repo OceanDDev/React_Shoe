@@ -1,51 +1,22 @@
-// src/context/AuthContext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
-
-const API_URL = 'http://localhost:3000/users'; // Đảm bảo URL đúng và không có dấu '/' cuối cùng
+import { checkLogin } from '../services/accountService'; // Import hàm kiểm tra đăng nhập
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axios.get(`${API_URL}`, { // Endpoint để lấy thông tin người dùng hiện tại
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } // Thêm token vào header
-        });
-        setUser(response.data);
-      } catch (error) {
-        console.error('Failed to fetch user:', error);
-        setUser(null); // Nếu có lỗi, xóa thông tin người dùng
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUser();
+    const loggedInUser = checkLogin(); // Kiểm tra trạng thái đăng nhập từ localStorage
+    if (loggedInUser) {
+      setUser(loggedInUser);
+      setIsAuthenticated(true);
+    }
   }, []);
 
-  const login = async (credentials) => {
-    try {
-      const response = await axios.post(`${API_URL}/login`, credentials); // Cập nhật endpoint và credentials
-      const { token, userData } = response.data;
-      localStorage.setItem('token', token); // Lưu token vào localStorage
-      setUser(userData);
-    } catch (error) {
-      console.error('Login failed:', error);
-    }
-  };
-
-  const logout = () => {
-    localStorage.removeItem('token'); // Xóa token khỏi localStorage
-    setUser(null);
-  };
-
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, setUser, isAuthenticated, setIsAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );

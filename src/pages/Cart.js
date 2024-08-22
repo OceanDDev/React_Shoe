@@ -10,18 +10,18 @@ import { checkLogin } from '../services/accountService'; // Giả sử bạn có
 const Cart = () => {
   const navigate = useNavigate();
   const { cartItems, cartQty, totalPrice, increaseQty, decreaseQty, removeCartItem } = useShoppingContext();
-  const { isAuthenticated, setIsAuthenticated } = useAuthContext();
+  const { user } = useAuthContext(); // Sử dụng `user` để kiểm tra trạng thái đăng nhập
 
   // Kiểm tra trạng thái đăng nhập khi component được mount
   useEffect(() => {
     const user = checkLogin();
     if (user) {
-      setIsAuthenticated(true);
+      // Nếu cần, có thể xử lý thêm trạng thái đăng nhập ở đây
     }
-  }, [setIsAuthenticated]);
+  }, []);
 
   const handlePurchase = () => {
-    if (isAuthenticated) {
+    if (user) {
       navigate('/checkout'); // Điều hướng đến trang checkout nếu đã đăng nhập
     } else {
       alert('Bạn cần đăng nhập để mua hàng!');
@@ -53,7 +53,7 @@ const Cart = () => {
               <div key={index} className="row border-top border-bottom">
                 <div className="row main align-items-center">
                   <div className="col-2">
-                    <img className="img-fluid" src={`http://localhost:3000/images/${item.image}`}/>
+                    <img className="img-fluid" src={`https://server-shoe-inky.vercel.app/images/${item.image}`}/>
                   </div>
                   <div className="col">
                     <div className="row text-muted">{item.product_name}</div>

@@ -45,7 +45,7 @@ const Checkout = () => {
                 cartItems.map((item, index) => (
                   <div key={index} className="order-item">
                     <div className="item-details">
-                      <img src={`http://localhost:3000/images/${item.image}`} alt={item.product_name} />
+                      <img src={`https://server-shoe-inky.vercel.app/images/${item.image}`} alt={item.product_name} />
                       <div>
                         <h6>{item.product_name}</h6>
                         <p>€ {item.price} x {item.qty}</p>
