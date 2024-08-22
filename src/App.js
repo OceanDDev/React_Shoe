@@ -4,7 +4,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import Footer from "./components/footer";
 import Products from "./pages/Products";
-import Login from "./pages/Login";
+import Login from "./pages/login";
 import Register from "./pages/Register";
 import Cart from "./pages/Cart";
 import { Toaster } from 'react-hot-toast';
