@@ -1,41 +1,37 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 
-const LoginForm = ({ onLogin }) => {
-  const [formData, setFormData] = useState({ email: '', password: '' });
-  const [error] = useState('');
+const renderField = ({ input, type, placeholder }) => (
+  <div className="form-control1">
+    <input {...input} type={type} placeholder={placeholder} />
+  </div>
+);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-  };
+const LoginForm = (props) => {
+  const { handleSubmit, pristine, submitting, error } = props;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = (formData) => {
     console.log(formData);
-    onLogin(formData);
+    props.onLogin(formData);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="username form-control1">
-        <input
-          type="email"
+        <Field
           name="email"
-          id="username"
+          type="email"
+          component={renderField}
           placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
         />
       </div>
       <div className="password form-control1">
-        <input
-          type="password"
+        <Field
           name="password"
-          id="password"
+          type="password"
+          component={renderField}
           placeholder="Mật khẩu"
-          value={formData.password}
-          onChange={handleChange}
         />
         {error && (
           <div
@@ -57,7 +53,9 @@ const LoginForm = ({ onLogin }) => {
         This site is protected by reCAPTCHA and the Google{' '}
       </div>
       <div className="submit">
-        <button type="submit" className="btn-dangnhap">Đăng nhập</button>
+        <button type="submit" className="btn-dangnhap" disabled={pristine || submitting}>
+          Đăng nhập
+        </button>
         <div className="forgetpassword">
           <p id="quenmk">Quên mật khẩu?</p> hoặc <Link to="/register">Đăng kí</Link>
         </div>
@@ -66,4 +64,6 @@ const LoginForm = ({ onLogin }) => {
   );
 };
 
-export default LoginForm;
+export default reduxForm({
+  form: 'loginForm', 
+})(LoginForm);

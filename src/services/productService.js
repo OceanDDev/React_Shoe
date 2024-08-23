@@ -57,7 +57,7 @@ export const getHotProducts = async (num) => {
 
 export const saveProduct = async (product) => { 
     try {
-        const reponse = await axios.post(`${API_URL}/insert`, product);    
+        const reponse = await axios.post(`http://localhost:3000/products/insert`, product);    
         return reponse.data;
     } catch (error) {
         console.log("Error saving product", error);
