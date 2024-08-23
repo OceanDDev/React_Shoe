@@ -21,7 +21,7 @@ const ProductTable = ({ products,onEdit,onDelete }) => {
           products.map(product => (
             <tr key={product._id}>
               <td>
-                <img src={`https://server-shoe-inky.vercel.app/images/${product.image}`} style={{width: "100px"}} />
+                <img src={`https://server-shoe-wheat.vercel.app/images/${product.image}`} style={{width: "100px"}} />
               </td>
               <td>{product.product_name}</td>
               <td>{product.price}</td>

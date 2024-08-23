@@ -106,7 +106,7 @@ const ProductForm = ({ product, onSave, handleReset, onCancel }) => {
                 />
             </div>
             <div className="form-group">
-            <img width={200} name='imgOld' src={`http://localhost:3000/products/images/${formData?.image}`}/>
+            <img width={200} name='imgOld' src={`https://server-shoe-wheat.vercel.app/products/images/${formData?.image}`}/>
             </div>
             <div className="form-group">
                 <label htmlFor="hot">Hot</label>
