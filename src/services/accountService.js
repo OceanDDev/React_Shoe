@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://server-shoe-inky.vercel.app/users';
+const API_URL = 'https://server-shoe-wheat.vercel.app/users';
 
 // Đăng ký người dùng mới
 export const register = async (userData) => {

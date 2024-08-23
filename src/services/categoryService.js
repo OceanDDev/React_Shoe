@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-const API_URL = 'https://server-shoe-inky.vercel.app/category'
+const API_URL = 'https://server-shoe-wheat.vercel.app/category'
 
 export const getCategory = async () =>{ 
     try {

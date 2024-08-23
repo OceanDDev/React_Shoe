@@ -53,7 +53,7 @@ const Cart = () => {
               <div key={index} className="row border-top border-bottom">
                 <div className="row main align-items-center">
                   <div className="col-2">
-                    <img className="img-fluid" src={`https://server-shoe-inky.vercel.app/images/${item.image}`}/>
+                    <img className="img-fluid" src={`https://server-shoe-wheat.vercel.app/images/${item.image}`}/>
                   </div>
                   <div className="col">
                     <div className="row text-muted">{item.product_name}</div>

@@ -58,12 +58,12 @@ const Home = () => {
             <Link  to={`/productDetail/${product._id}`}>
               <p href="#" title="Adidas EQT Cushion ADV" className="img-resize">
                 <img
-          src={`https://server-shoe-inky.vercel.app/images/${product.image}`}
+          src={`https://server-shoe-wheat.vercel.app/images/${product.image}`}
           alt="Adidas EQT Cushion ADV"
                   className="lazyloaded"
                 />
                 <img
-          src={`https://server-shoe-inky.vercel.app/images/${product.image}`}
+          src={`https://server-shoe-wheat.vercel.app/images/${product.image}`}
           alt="Adidas EQT Cushion ADV"
                   className="lazyloaded"
                 />

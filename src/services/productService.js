@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-const API_URL = 'https://server-shoe-inky.vercel.app/products'
+const API_URL = 'https://server-shoe-wheat.vercel.app/products'
 
 export const getProducts = async () =>{ 
     try {

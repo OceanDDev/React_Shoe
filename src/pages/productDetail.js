@@ -39,7 +39,7 @@ const ProductDetail = () => {
                   <ul id="sliderproduct" className="site-box-content slide_product">
                     {['imgg1a', 'imgg2a', 'imgg3a'].map((id, index) => (
                       <li key={index} className={`product-gallery-item gallery-item ${index === 0 ? 'current' : ''}`} id={id}>
-                        <img className="product-image-feature"  src={`https://server-shoe-inky.vercel.app/images/${productDetail.image}`} alt="Nike Air Max 90 Essential" />
+                        <img className="product-image-feature"  src={`https://server-shoe-wheat.vercel.app/images/${productDetail.image}`} alt="Nike Air Max 90 Essential" />
                       </li>
                     ))}
                   </ul>
